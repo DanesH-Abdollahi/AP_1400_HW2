@@ -36,14 +36,15 @@ TEST(HW1Test, TEST4)
     EXPECT_NE(bryan1->get_id(), bryan3->get_id());
     EXPECT_NE(bryan2->get_id(), bryan3->get_id());
 }
-/*
-TEST(HW1Test, TEST5) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    std::string public_key{bryan->get_publickey()};
+
+TEST(HW1Test, TEST5)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    std::string public_key { bryan->get_publickey() };
     EXPECT_TRUE(!bryan->get_publickey().empty());
 }
-
+/*
 TEST(HW1Test, TEST6) {
     Server server{};
     auto bryan{server.add_client("bryan")};
