@@ -44,14 +44,16 @@ TEST(HW1Test, TEST5)
     std::string public_key { bryan->get_publickey() };
     EXPECT_TRUE(!bryan->get_publickey().empty());
 }
-/*
-TEST(HW1Test, TEST6) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
+
+TEST(HW1Test, TEST6)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
     EXPECT_TRUE(bryan->get_publickey() != clint->get_publickey());
 }
 
+/*
 TEST(HW1Test, TEST7) {
     Server server{};
     auto bryan{server.add_client("bryan")};
