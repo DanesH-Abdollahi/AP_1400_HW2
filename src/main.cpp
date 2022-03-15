@@ -8,7 +8,12 @@ int main(int argc, char** argv)
 {
     if (false) // make false to run unit-tests
     {
-        // debug section
+        // std::string a = "Hello";
+        // const std::string b;
+        // b = a;
+        // std::cout << b << std::endl;
+        // // debug section
+
     } else {
         ::testing::InitGoogleTest(&argc, argv);
         std::cout << "RUNNING TESTS ..." << std::endl;
