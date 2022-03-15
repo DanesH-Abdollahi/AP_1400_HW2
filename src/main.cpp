@@ -8,11 +8,10 @@ int main(int argc, char** argv)
 {
     if (false) // make false to run unit-tests
     {
-        // std::string a = "Hello";
-        // const std::string b;
-        // b = a;
-        // std::cout << b << std::endl;
-        // // debug section
+        std::random_device rd;
+        std::default_random_engine eng(rd());
+        std::uniform_real_distribution<double> distr(1000, 9999); // Range is 1000 to 9999
+        std::cout << static_cast<int>(distr(eng)) << std::endl;
 
     } else {
         ::testing::InitGoogleTest(&argc, argv);
