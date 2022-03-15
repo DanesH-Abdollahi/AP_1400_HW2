@@ -53,16 +53,16 @@ TEST(HW1Test, TEST6)
     EXPECT_TRUE(bryan->get_publickey() != clint->get_publickey());
 }
 
-/*
-TEST(HW1Test, TEST7) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
-    Server const* p{&server};
+TEST(HW1Test, TEST7)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
+    Server const* p { &server };
     auto client = p->get_client("no_one");
     EXPECT_TRUE(client == nullptr);
 }
-
+/*
 TEST(HW1Test, TEST8) {
     Server server{};
     auto bryan{server.add_client("bryan")};
