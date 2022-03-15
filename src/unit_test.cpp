@@ -18,23 +18,25 @@ TEST(HW1Test, TEST2)
     auto bryan_from_server { server.get_client("bryan") };
     EXPECT_EQ(bryan.get(), bryan_from_server.get());
 }
-/*
-TEST(HW1Test, TEST3) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
+
+TEST(HW1Test, TEST3)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
     EXPECT_DOUBLE_EQ(bryan->get_wallet(), 5.0);
 }
 
-TEST(HW1Test, TEST4) {
-    Server server{};
-    auto bryan1{server.add_client("bryan")};
-    auto bryan2{server.add_client("bryan")};
-    auto bryan3{server.add_client("bryan")};
+TEST(HW1Test, TEST4)
+{
+    Server server {};
+    auto bryan1 { server.add_client("bryan") };
+    auto bryan2 { server.add_client("bryan") };
+    auto bryan3 { server.add_client("bryan") };
     EXPECT_NE(bryan1->get_id(), bryan2->get_id());
     EXPECT_NE(bryan1->get_id(), bryan3->get_id());
     EXPECT_NE(bryan2->get_id(), bryan3->get_id());
 }
-
+/*
 TEST(HW1Test, TEST5) {
     Server server{};
     auto bryan{server.add_client("bryan")};

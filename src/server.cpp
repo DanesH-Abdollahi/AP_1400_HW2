@@ -1,7 +1,8 @@
 #include "server.h"
-Server::Server()
-{
-}
+
+Server::Server() { }
+
+//-----------------------------------------------------------------------------------
 
 std::shared_ptr<Client> Server::add_client(std::string _id)
 {
@@ -11,12 +12,26 @@ std::shared_ptr<Client> Server::add_client(std::string _id)
 
     return client_pointer;
 }
+//------------------------------------------------------------------------------------
 
 std::shared_ptr<Client> Server::get_client(std::string _id)
 {
-    for (std::map<std::shared_ptr<Client>, double>::iterator ii = clients.begin(); ii != clients.end(); ++ii) {
+    for (auto ii = clients.begin(); ii != clients.end(); ii++) {
         if (ii->first->get_id() == _id)
             return ii->first;
     }
     throw std::logic_error("ID Does Not Exist !");
 }
+
+//------------------------------------------------------------------------------------
+
+double Server::get_wallet(std::string _id) const
+{
+    for (auto jj = clients.begin(); jj != clients.end(); jj++) {
+        if (jj->first->get_id() == _id)
+            return jj->second;
+    }
+    throw std::logic_error("ID Does Not Exist !");
+}
+
+//-----------------------------------------------------------------------------------
