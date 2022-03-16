@@ -89,9 +89,51 @@ bool Server::add_pending_trx(std::string trx, std::string signature) const
 
 size_t Server::mine()
 {
+    std::vector<std::string> Senders {}, Receivers {};
+    std::vector<double> Values {};
     std::string mempool {};
-    for (auto trx : pending_trxs)
+    std::string sender {}, receiver {};
+    double value {};
+
+    for (auto trx : pending_trxs) {
         mempool = mempool + trx;
+        parse_trx(trx, sender, receiver, value);
+        Senders.push_back(sender);
+        Receivers.push_back(receiver);
+        Values.push_back(value);
+    }
+
+    std::vector<std::shared_ptr<Client>> Client_Senders {};
+    std::vector<std::shared_ptr<Client>> Client_Receivers {};
+    for (auto i : Senders)
+        Client_Senders.push_back(get_client(i));
+
+    for (auto i : Receivers)
+        Client_Receivers.push_back(get_client(i));
+
+    for (auto j : Client_Senders) {
+        size_t nonce_temp { j->generate_nonce() };
+        std::string hash { crypto::sha256(mempool
+            + std::to_string(nonce_temp)) };
+
+        if (hash.substr(0, 10).find("000") != std::string::npos) {
+            std::cout << "MINER is: " + j->get_id() << std::endl;
+            clients[j] += 6.25;
+            size_t counter {};
+            for (auto k : Client_Senders) {
+                clients[k] -= Values[counter];
+                counter++;
+            }
+            counter = 0;
+            for (auto k : Client_Receivers) {
+                clients[k] += Values[counter];
+                counter++;
+            }
+            pending_trxs.clear();
+            return nonce_temp;
+        }
+    }
+    return mine();
 }
 
 //----------------------------------------------------------------------------------
