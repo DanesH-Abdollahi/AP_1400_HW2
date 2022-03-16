@@ -1,8 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include "crypto.h"
 #include "server.h"
-#include <crypto.h>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -17,8 +17,8 @@ public:
     std::string get_id();
     std::string get_publickey();
     double get_wallet();
-    // std::string sign(std::string txt);
-    // bool transfer_money(std::string receiver, double value);
+    std::string sign(std::string txt) const;
+    bool transfer_money(std::string receiver, double value);
     // size_t generate_nonce();
 
 private:

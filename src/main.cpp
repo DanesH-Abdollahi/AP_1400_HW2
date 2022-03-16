@@ -1,6 +1,7 @@
 
 #include "client.h"
 #include "server.h"
+#include <algorithm>
 #include <gtest/gtest.h>
 #include <iostream>
 
@@ -8,10 +9,13 @@ int main(int argc, char** argv)
 {
     if (false) // make false to run unit-tests
     {
-        std::random_device rd;
-        std::default_random_engine eng(rd());
-        std::uniform_real_distribution<double> distr(1000, 9999); // Range is 1000 to 9999
-        std::cout << static_cast<int>(distr(eng)) << std::endl;
+        // std::string trx = "ali-hamed-1.5";
+        // // int count { std::count(trx.begin(), trx.end(), '-') };
+        // size_t first = trx.find('-');
+        // size_t second = trx.find('-', first + 1);
+        // std::cout << trx.substr(0, first) << std::endl;
+        // std::cout << trx.substr(first + 1, second - first - 1) << std::endl;
+        // std::cout << trx.substr(second + 1) << std::endl;
 
     } else {
         ::testing::InitGoogleTest(&argc, argv);

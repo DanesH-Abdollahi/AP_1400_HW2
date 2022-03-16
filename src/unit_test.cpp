@@ -62,47 +62,56 @@ TEST(HW1Test, TEST7)
     auto client = p->get_client("no_one");
     EXPECT_TRUE(client == nullptr);
 }
-/*
-TEST(HW1Test, TEST8) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
-    show_wallets(server);
-}
 
-TEST(HW1Test, TEST9) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    Client const* p{bryan.get()};
-    std::string signature{p->sign("mydata")};
-    EXPECT_TRUE(crypto::verifySignature(p->get_publickey(), "mydata", signature));
-    EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "notmydata", signature));
-    EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "mydata", "not_my_signature"));
-}
+// TEST(HW1Test, TEST8)
+// {
+//     Server server {};
+//     auto bryan { server.add_client("bryan") };
+//     auto clint { server.add_client("clint") };
+//     show_wallets(server);
+// }
 
-TEST(HW1Test, TEST10) {
-    std::string sender{}, receiver{};
+// TEST(HW1Test, TEST9)
+// {
+//     Server server {};
+//     Client const* p { bryan.get() };
+//     std::string signature { p->sign("mydata") };
+//     EXPECT_TRUE(crypto::verifySignature(p->get_publickey(), "mydata", signature));
+//     EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "notmydata", signature));
+//     EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "mydata", "not_my_signature"));
+// }    auto bryan { server.add_client("bryan") };
+
+TEST(HW1Test, TEST10)
+{
+    Server server {}; // Man ezaaafe krdm :|
+    std::string sender {}, receiver {};
     double value;
-    Server::parse_trx("sarah-clay-0.5", sender, receiver, value);
+    // Server::parse_trx("sarah-clay-0.5", sender, receiver, value);  In neveshte shode bud :| !!!!
+    server.parse_trx("sarah-clay-0.5", sender, receiver, value); // Man ezaaafe krdm :\
     EXPECT_EQ(sender, "sarah");
     EXPECT_EQ(receiver, "clay");
     EXPECT_DOUBLE_EQ(value, 0.5);
 }
 
-TEST(HW1Test, TEST11) {
-    std::string sender{}, receiver{};
+TEST(HW1Test, TEST11)
+{
+    Server server {}; // Man ezaafe krdm
+    std::string sender {}, receiver {};
     double value;
-    EXPECT_THROW(Server::parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error);
+    // EXPECT_THROW(Server::parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error);  Ino neveshte bud :| !
+    EXPECT_THROW(server.parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error); // Ino man nvshtam :|
 }
 
-TEST(HW1Test, TEST12) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
-    bool valid{bryan->transfer_money("no_one", 0.5)};
+TEST(HW1Test, TEST12)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
+    bool valid { bryan->transfer_money("no_one", 0.5) };
     EXPECT_FALSE(valid);
 }
 
+/*
 TEST(HW1Test, TEST13) {
     Server server{};
     auto bryan{server.add_client("bryan")};
