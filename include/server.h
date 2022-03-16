@@ -29,4 +29,12 @@ private:
 
 inline std::vector<std::string> pending_trxs;
 
+static void show_pending_transactions()
+{
+    std::cout << std::string(20, '*') << std::endl;
+    for (const auto& trx : pending_trxs)
+        std::cout << trx << std::endl;
+    std::cout << std::string(20, '*') << std::endl;
+}
+
 #endif // SERVER_H
