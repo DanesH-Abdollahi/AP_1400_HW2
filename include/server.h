@@ -15,7 +15,7 @@ class Client;
 
 class Server {
 public:
-    Server(); // Constructor
+    Server(); // Constructor (default)
     std::shared_ptr<Client> add_client(std::string id);
     std::shared_ptr<Client> get_client(std::string id) const;
     double get_wallet(std::string id) const;
