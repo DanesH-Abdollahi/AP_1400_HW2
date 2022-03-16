@@ -42,29 +42,6 @@ double Server::get_wallet(std::string _id) const
     throw std::logic_error("ID Does Not Exist !");
 }
 
-//-----------------------------------------------------------------------------------
-
-// void show_wallets(const Server& server)
-// {
-//     std::shared_ptr<Server> ptr = &server ;
-
-//     class FYM {
-//     public:
-//         std::map<std::shared_ptr<Client>, double> FYM_clients;
-//     };
-//     reinterpret_cast<FYM*>( &server ) ;
-
-//     // std::shared_ptr<Server> ptr = (std::shared_ptr<Server>)&server;
-//     std::cout << FYM_client.first << std::endl;
-
-//     //     Server Temp { server };
-//     //     std::cout << std::string(20, '*') << std::endl;
-//     //     for (const auto& client : server.clients)
-//     //         std::cout << client.first->get_id() << " : " << client.second << std::endl;
-//     //     std::cout << std::string(20, '*') << std::endl;
-//     //
-// }
-
 //----------------------------------------------------------------------------------
 
 bool Server::parse_trx(std::string trx, std::string& sender, std::string& receiver, double& value)
@@ -83,28 +60,38 @@ bool Server::parse_trx(std::string trx, std::string& sender, std::string& receiv
 
 //----------------------------------------------------------------------------------
 
-bool Server::add_pending_trx(std::string trx, std::string signature)
+bool Server::add_pending_trx(std::string trx, std::string signature) const
 {
-    size_t first = trx.find('-');
-    size_t second = trx.find('-', first + 1);
-    std::string sender = trx.substr(0, first);
-    double value = std::stod(trx.substr(second + 1));
-    std::string public_key {};
-    double money {};
 
-    for (auto ii = clients.begin(); ii != clients.end(); ii++)
-        if (ii->first->get_id() == sender) {
-            public_key = ii->first->get_publickey();
-            money = ii->second;
-        }
+    std::string sender {}, receiver {};
+    double value {};
+    Server::parse_trx(trx, sender, receiver, value);
 
-    bool authentic = crypto::verifySignature(public_key, trx, signature);
+    std::shared_ptr<Client> client_sender { get_client(sender) };
+    std::shared_ptr<Client> client_receiver { get_client(receiver) };
 
-    if (authentic && money >= value) {
+    if (!client_sender || !client_receiver)
+        return false;
+
+    double sender_money { get_wallet(sender) };
+    std::string sender_public_key { client_sender->get_publickey() };
+
+    bool authentic = crypto::verifySignature(sender_public_key, trx, signature);
+
+    if (authentic && sender_money >= value) {
         pending_trxs.push_back(trx);
         return true;
     } else
         return false;
+}
+
+//----------------------------------------------------------------------------------
+
+size_t Server::mine()
+{
+    std::string mempool {};
+    for (auto trx : pending_trxs)
+        mempool = mempool + trx;
 }
 
 //----------------------------------------------------------------------------------

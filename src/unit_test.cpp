@@ -63,43 +63,40 @@ TEST(HW1Test, TEST7)
     EXPECT_TRUE(client == nullptr);
 }
 
-// TEST(HW1Test, TEST8)
-// {
-//     Server server {};
-//     auto bryan { server.add_client("bryan") };
-//     auto clint { server.add_client("clint") };
-//     show_wallets(server);
-// }
+TEST(HW1Test, TEST8)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
+    show_wallets(server);
+}
 
-// TEST(HW1Test, TEST9)
-// {
-//     Server server {};
-//     Client const* p { bryan.get() };
-//     std::string signature { p->sign("mydata") };
-//     EXPECT_TRUE(crypto::verifySignature(p->get_publickey(), "mydata", signature));
-//     EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "notmydata", signature));
-//     EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "mydata", "not_my_signature"));
-// }    auto bryan { server.add_client("bryan") };
+TEST(HW1Test, TEST9)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    Client const* p { bryan.get() };
+    std::string signature { p->sign("mydata") };
+    EXPECT_TRUE(crypto::verifySignature(p->get_publickey(), "mydata", signature));
+    EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "notmydata", signature));
+    EXPECT_FALSE(crypto::verifySignature(p->get_publickey(), "mydata", "not_my_signature"));
+}
 
 TEST(HW1Test, TEST10)
 {
-    Server server {}; // Man ezaaafe krdm :|
+
     std::string sender {}, receiver {};
     double value;
-    // Server::parse_trx("sarah-clay-0.5", sender, receiver, value);  In neveshte shode bud :| !!!!
-    server.parse_trx("sarah-clay-0.5", sender, receiver, value); // Man ezaaafe krdm :\
-    EXPECT_EQ(sender, "sarah");
+    Server::parse_trx("sarah-clay-0.5", sender, receiver, value); // In neveshte shode bud :| !!!!
     EXPECT_EQ(receiver, "clay");
     EXPECT_DOUBLE_EQ(value, 0.5);
 }
 
 TEST(HW1Test, TEST11)
 {
-    Server server {}; // Man ezaafe krdm
     std::string sender {}, receiver {};
     double value;
-    // EXPECT_THROW(Server::parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error);  Ino neveshte bud :| !
-    EXPECT_THROW(server.parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error); // Ino man nvshtam :|
+    EXPECT_THROW(Server::parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error); // Ino neveshte bud :| !
 }
 
 TEST(HW1Test, TEST12)
@@ -111,54 +108,57 @@ TEST(HW1Test, TEST12)
     EXPECT_FALSE(valid);
 }
 
-/*
-TEST(HW1Test, TEST13) {
-    Server server{};
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
-    bool valid{bryan->transfer_money("clint", 100)};
+TEST(HW1Test, TEST13)
+{
+    Server server {};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
+    bool valid { bryan->transfer_money("clint", 100) };
     EXPECT_FALSE(valid);
 }
 
-TEST(HW1Test, TEST14) {
-    Server server{};
+TEST(HW1Test, TEST14)
+{
+    Server server {};
     pending_trxs.clear();
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
-    auto sarah{server.add_client("sarah")};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
+    auto sarah { server.add_client("sarah") };
     EXPECT_TRUE(bryan->transfer_money("clint", 1));
     EXPECT_TRUE(clint->transfer_money("sarah", 2.5));
     EXPECT_TRUE(sarah->transfer_money("bryan", 0.5));
 
-    std::cout  <<  std::string(20, '*') <<  std::endl;
-    for(const  auto& trx : pending_trxs)
-        std::cout << trx <<  std::endl;
-    std::cout  <<  std::string(20, '*') <<  std::endl;
+    std::cout << std::string(20, '*') << std::endl;
+    for (const auto& trx : pending_trxs)
+        std::cout << trx << std::endl;
+    std::cout << std::string(20, '*') << std::endl;
 }
 
-TEST(HW1Test, TEST15) {
-    Server server{};
+TEST(HW1Test, TEST15)
+{
+    Server server {};
     pending_trxs.clear();
-    auto bryan{server.add_client("bryan")};
-    auto clint{server.add_client("clint")};
-    auto sarah{server.add_client("sarah")};
+    auto bryan { server.add_client("bryan") };
+    auto clint { server.add_client("clint") };
+    auto sarah { server.add_client("sarah") };
     EXPECT_TRUE(bryan->transfer_money("clint", 1));
     EXPECT_TRUE(clint->transfer_money("sarah", 2.5));
     EXPECT_TRUE(sarah->transfer_money("bryan", 0.5));
 
-    std::string mempool{};
-    for(const auto& trx : pending_trxs)
+    std::string mempool {};
+    for (const auto& trx : pending_trxs)
         mempool += trx;
 
     show_wallets(server);
-    size_t nonce{server.mine()};
+    size_t nonce { server.mine() };
     show_wallets(server);
 
     std::string hash = crypto::sha256(mempool + std::to_string(nonce));
     EXPECT_TRUE(hash.substr(0, 10).find("000") != std::string::npos);
     // MINER is: sarah || bryan || clint
-    EXPECT_TRUE(bryan->get_wallet()==4.5 || bryan->get_wallet()==10.75 || bryan->get_wallet()==4.5);
-    EXPECT_TRUE(clint->get_wallet()==3.5 ||clint->get_wallet()==3.5 ||clint->get_wallet()==9.75);
-    EXPECT_TRUE(sarah->get_wallet()==13.25 || sarah->get_wallet()==7 || sarah->get_wallet()==7);
+    EXPECT_TRUE(bryan->get_wallet() == 4.5 || bryan->get_wallet() == 10.75 || bryan->get_wallet() == 4.5);
+    EXPECT_TRUE(clint->get_wallet() == 3.5 || clint->get_wallet() == 3.5 || clint->get_wallet() == 9.75);
+    EXPECT_TRUE(sarah->get_wallet() == 13.25 || sarah->get_wallet() == 7 || sarah->get_wallet() == 7);
 }
-*/
+/*
+ */

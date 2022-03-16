@@ -3,7 +3,9 @@
 Client::Client(std::string _id, const Server& _server)
     : id { _id }
     , server { &_server }
+
 {
+    crypto::generate_key(public_key, private_key);
 }
 
 //--------------------------------------------------------
@@ -19,12 +21,8 @@ double Client::get_wallet()
 
 //--------------------------------------------------------
 
-std::string Client::get_publickey()
+std::string Client::get_publickey() const
 {
-    std::string public_key1 {}, private_key1 {};
-    crypto::generate_key(public_key1, private_key1);
-    public_key = public_key1;
-    private_key = private_key1;
     return public_key;
 }
 
@@ -33,7 +31,6 @@ std::string Client::get_publickey()
 std::string Client::sign(std::string txt) const
 {
     std::string signature = crypto::signMessage(private_key, txt);
-    std::cout << "Haaaaaaaaaaamid to nabegheEEEE nakhaaaaaaaaaaaaaab2" << std::endl;
     return signature;
 }
 
@@ -41,11 +38,20 @@ std::string Client::sign(std::string txt) const
 
 bool Client::transfer_money(std::string receiver, double value)
 {
-    Server server {};
     std::string transaction { id + '-' + receiver + '-' + std::to_string(value) };
     std::string signature { sign(transaction) };
-    // bool athen { server.add_pending_trx(transaction, signature) };
-    return server.add_pending_trx(transaction, signature);
+
+    return server->add_pending_trx(transaction, signature);
+}
+
+//--------------------------------------------------------
+
+size_t Client::generate_nonce()
+{
+    std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_real_distribution<double> distr(0, 1e6); // Range is 0 to 1e6
+    return static_cast<size_t>(distr(eng));
 }
 
 //--------------------------------------------------------
