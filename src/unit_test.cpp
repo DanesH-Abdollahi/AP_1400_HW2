@@ -87,7 +87,7 @@ TEST(HW1Test, TEST10)
 
     std::string sender {}, receiver {};
     double value;
-    Server::parse_trx("sarah-clay-0.5", sender, receiver, value); // In neveshte shode bud :| !!!!
+    Server::parse_trx("sarah-clay-0.5", sender, receiver, value);
     EXPECT_EQ(receiver, "clay");
     EXPECT_DOUBLE_EQ(value, 0.5);
 }
@@ -96,7 +96,7 @@ TEST(HW1Test, TEST11)
 {
     std::string sender {}, receiver {};
     double value;
-    EXPECT_THROW(Server::parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error); // Ino neveshte bud :| !
+    EXPECT_THROW(Server::parse_trx("sarah-clay_0.5", sender, receiver, value), std::runtime_error);
 }
 
 TEST(HW1Test, TEST12)

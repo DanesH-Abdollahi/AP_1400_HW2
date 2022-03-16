@@ -15,7 +15,7 @@ class Client;
 
 class Server {
 public:
-    Server(); // Default Constructor
+    Server(); // Constructor
     std::shared_ptr<Client> add_client(std::string id);
     std::shared_ptr<Client> get_client(std::string id) const;
     double get_wallet(std::string id) const;
@@ -28,13 +28,5 @@ private:
 };
 
 inline std::vector<std::string> pending_trxs;
-
-// static void show_pending_transactions()
-// {
-//     std::cout << std::string(20, '*') << std::endl;
-//     for (const auto& trx : pending_trxs)
-//         std::cout << trx << std::endl;
-//     std::cout << std::string(20, '*') << std::endl;
-// }
 
 #endif // SERVER_H

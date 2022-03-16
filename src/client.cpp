@@ -3,7 +3,6 @@
 Client::Client(std::string _id, const Server& _server)
     : id { _id }
     , server { &_server }
-
 {
     crypto::generate_key(public_key, private_key);
 }
@@ -40,8 +39,8 @@ bool Client::transfer_money(std::string receiver, double value)
 {
     std::string transaction { id + '-' + receiver + '-' + std::to_string(value) };
     std::string signature { sign(transaction) };
-
-    return server->add_pending_trx(transaction, signature);
+    bool Athen { server->add_pending_trx(transaction, signature) };
+    return Athen;
 }
 
 //--------------------------------------------------------
@@ -50,6 +49,8 @@ size_t Client::generate_nonce()
 {
     std::random_device rd;
     std::default_random_engine eng(rd());
-    std::uniform_real_distribution<double> distr(0, 1e3); // Range is 0 to 1e6
+    std::uniform_real_distribution<double> distr(0, 1e3); // Range is 0 to 1e3
     return static_cast<size_t>(distr(eng));
 }
+
+//----------------------------------The End--------------------------------------

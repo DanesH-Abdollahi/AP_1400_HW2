@@ -1,6 +1,9 @@
 #include "server.h"
 
-Server::Server() { }
+Server::Server()
+    : clients {}
+{
+}
 
 //-----------------------------------------------------------------------------------
 
@@ -70,19 +73,19 @@ bool Server::add_pending_trx(std::string trx, std::string signature) const
     std::shared_ptr<Client> client_sender { get_client(sender) };
     std::shared_ptr<Client> client_receiver { get_client(receiver) };
 
-    if (!client_sender || !client_receiver)
-        return false;
-
     double sender_money { get_wallet(sender) };
     std::string sender_public_key { client_sender->get_publickey() };
-
     bool authentic = crypto::verifySignature(sender_public_key, trx, signature);
 
-    if (authentic && sender_money >= value) {
+    if ((client_sender == nullptr) || (client_receiver == nullptr)) {
+        return false;
+    }
+
+    if (authentic && (sender_money > value)) {
         pending_trxs.push_back(trx);
         return true;
-    } else
-        return false;
+    }
+    return false;
 }
 
 //----------------------------------------------------------------------------------
@@ -120,6 +123,7 @@ size_t Server::mine()
             std::cout << "MINER is: " + j->get_id() << std::endl;
             clients[j] += 6.25;
             size_t counter {};
+            counter = 0;
             for (auto k : Client_Senders) {
                 clients[k] -= Values[counter];
                 counter++;
@@ -136,4 +140,4 @@ size_t Server::mine()
     return mine();
 }
 
-//----------------------------------------------------------------------------------
+//----------------------------------The End--------------------------------------
