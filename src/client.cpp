@@ -50,6 +50,6 @@ size_t Client::generate_nonce()
 {
     std::random_device rd;
     std::default_random_engine eng(rd());
-    std::uniform_real_distribution<double> distr(0, 1e4); // Range is 0 to 1e6
+    std::uniform_real_distribution<double> distr(0, 1e3); // Range is 0 to 1e6
     return static_cast<size_t>(distr(eng));
 }
