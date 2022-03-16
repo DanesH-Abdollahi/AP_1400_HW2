@@ -5,7 +5,7 @@ Server::Server() // Constructor (default)
 {
 }
 //-----------------------------------------------------------------------------------
-// Defining add client function
+// Defining add_client function
 std::shared_ptr<Client> Server::add_client(std::string _id)
 {
     for (auto jj = clients.begin(); jj != clients.end(); jj++)
